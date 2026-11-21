@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PageVault — OpenShelf</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ══ TOP BAR ══ -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-icon">▤</div>
+      <div>
+        PageVault
+        <small>OPENSHELF · CAMPUS EXCHANGE</small>
+      </div>
+    </div>
+    <div class="top-right">
+      <select id="userSelect">
+        <option value="spandana">Viewing as: Spandana</option>
+        <option value="prashanth">Viewing as: Prashanth</option>
+        <option value="sejal">Viewing as: Sejal</option>
+      </select>
+      <div class="avatar" id="avatar">S</div>
+    </div>
+  </header>
+
+  <!-- ══ LAYOUT ══ -->
+  <div class="layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="side-label">WORKSPACE</div>
+      <button class="nav-btn active" data-page="catalog">⌕ Explore Books</button>
+      <button class="nav-btn" data-page="dashboard">▦ Dashboard</button>
+      <button class="nav-btn" data-page="mybooks">▤ My Listings</button>
+      <button class="nav-btn" data-page="exchanges">⇄ My Exchanges</button>
+      <div class="side-label">YOUR CAMPUS</div>
+      <div class="sidebar-note">
+        <strong>Share knowledge.</strong>
+        Pass a textbook forward. Help another student learn.
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+
+      <!-- ── Catalog Page ── -->
+      <section class="page active" id="catalog">
+        <div class="eyebrow">Campus book network</div>
+        <div class="page-header">
+          <div>
+            <h1>Find your next <span class="accent">read.</span></h1>
+            <p class="sub">Discover textbooks shared by students across your campus.</p>
+          </div>
+          <button class="btn btn-primary" id="openAdd">＋ List a book</button>
+        </div>
+
+        <!-- Hero Banner -->
+        <div class="hero-banner">
+          <div>
+            <div class="eyebrow" style="color:#c8c9ff;">THE OPEN SHELF COMMUNITY</div>
+            <h2>Good books deserve a second life.</h2>
+            <p>Search by course code, find books you need, and borrow from your campus community.</p>
+          </div>
+          <button class="btn btn-white" id="heroList">＋ Share a textbook</button>
+        </div>
+
+        <!-- Filters -->
+        <div class="toolbar">
+          <div class="search-wrap">
+            <span class="search-icon">⌕</span>
+            <input id="searchInput" placeholder="Search title, author, course code…" />
+          </div>
+          <select id="statusFilter">
+            <option value="all">All availability</option>
+            <option value="Available">Available</option>
+            <option value="Reserved">Reserved</option>
+            <option value="Borrowed">Borrowed</option>
+          </select>
+          <select id="deptFilter">
+            <option value="all">All departments</option>
+            <option>Computer Science</option>
+            <option>Electronics</option>
+            <option>Mechanical</option>
+            <option>Mathematics</option>
+            <option>Physics</option>
+          </select>
+        </div>
+
+        <div class="section-head">
+          <h3>Books shared by your campus</h3>
+          <span class="muted" id="resultCount"></span>
+        </div>
+        <div class="book-grid" id="bookGrid"></div>
+      </section>
+
+      <!-- ── Dashboard Page ── -->
+      <section class="page" id="dashboard">
+        <div class="eyebrow">Your workspace</div>
+        <div class="page-header">
+          <div>
+            <h1>Welcome back, <span id="welcomeName">Student</span> 👋</h1>
+            <p class="sub">Here's what's happening with your books today.</p>
+          </div>
+          <button class="btn btn-primary" id="dashList">＋ List a book</button>
+        </div>
+
+        <div id="reminderArea"></div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-top">Books listed <span class="stat-icon">▤</span></div>
+            <div class="stat-num" id="statListed">0</div>
+            <div class="stat-foot">Shared with campus</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-top">Active borrowings <span class="stat-icon">⇄</span></div>
+            <div class="stat-num" id="statBorrowed">0</div>
+            <div class="stat-foot">Books to return</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-top">Pending requests <span class="stat-icon">◷</span></div>
+            <div class="stat-num" id="statPending">0</div>
+            <div class="stat-foot">Awaiting a response</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-top">Completed <span class="stat-icon">✓</span></div>
+            <div class="stat-num" id="statReturned">0</div>
+            <div class="stat-foot">Successful exchanges</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="section-head" style="margin:0 0 10px;">
+            <h3>Requests needing your attention</h3>
+            <span class="muted">As a lender</span>
+          </div>
+          <div id="incomingRequests"></div>
+        </div>
+
+        <div class="panel">
+          <div class="section-head" style="margin:0 0 10px;">
+            <h3>Your current borrowings</h3>
+            <span class="muted">As a borrower</span>
+          </div>
+          <div id="dashBorrowings"></div>
+        </div>
+      </section>
+
+      <!-- ── My Listings Page ── -->
+      <section class="page" id="mybooks">
+        <div class="eyebrow">Your contribution</div>
+        <div class="page-header">
+          <div>
+            <h1>My listings</h1>
+            <p class="sub">Manage the textbooks you've shared with campus.</p>
+          </div>
+          <button class="btn btn-primary" id="myList">＋ Add a book</button>
+        </div>
+        <div class="panel">
+          <div id="myBooksTable"></div>
+        </div>
+      </section>
+
+      <!-- ── Exchanges Page ── -->
+      <section class="page" id="exchanges">
+        <div class="eyebrow">Borrowing activity</div>
+        <div class="page-header">
+          <div>
+            <h1>My exchanges</h1>
+            <p class="sub">Track requests, active loans, and completed returns.</p>
+          </div>
+        </div>
+        <div class="panel">
+          <div id="exchangeList"></div>
+        </div>
+      </section>
+
+      <div class="footer">PAGEVAULT OPEN SHELF · MADE FOR STUDENT COMMUNITIES</div>
+    </main>
+  </div>
+
+  <!-- ══ ADD BOOK MODAL ══ -->
+  <div class="modal-backdrop" id="addModal">
+    <div class="modal">
+      <div class="modal-head">
+        <h3>List a textbook</h3>
+        <button class="close-btn" data-close="addModal">✕</button>
+      </div>
+      <div class="modal-body">
+        <form id="bookForm">
+          <div class="form-grid">
+            <div class="form-group full">
+              <label>Book title *</label>
+              <input name="title" required placeholder="e.g. Operating System Concepts" />
+            </div>
+            <div class="form-group">
+              <label>Author *</label>
+              <input name="author" required placeholder="Abraham Silberschatz" />
+            </div>
+            <div class="form-group">
+              <label>Edition</label>
+              <input name="edition" placeholder="10th Edition" />
+            </div>
+            <div class="form-group">
+              <label>Course code *</label>
+              <input name="course" required placeholder="CS301" />
+            </div>
+            <div class="form-group">
+              <label>Department</label>
+              <select name="department">
+                <option>Computer Science</option>
+                <option>Electronics</option>
+                <option>Mechanical</option>
+                <option>Mathematics</option>
+                <option>Physics</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Condition</label>
+              <select name="condition">
+                <option>Good</option>
+                <option>Like New</option>
+                <option>Well Used</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-light" data-close="addModal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Publish listing</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
